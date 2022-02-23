@@ -65,3 +65,12 @@ output "secrets" {
   value       = [for secret in github_actions_secret.repository_secret : secret.secret_name]
   description = "List of secrets available."
 }
+
+output "branches" {
+  value       = github_repository.repository.branches
+  description = <<-EOD
+  The list of this repository's branches. Each element of branches has the following attributes:
+    *  name      - Name of the branch.
+    *  protected - Whether the branch is protected.
+  EOD
+}

@@ -48,6 +48,7 @@ module "repository" {
   license_template       = var.license_template
   archived               = false
   topics                 = var.topics
+  archive_on_destroy     = var.archive_on_destroy
 
   admin_collaborators = ["terraform-test-user-1"]
 
@@ -78,6 +79,8 @@ module "repository" {
     secret       = var.webhook_secret
   }]
 
+  additional_branches = var.additional_branches
+
   branch_protections = [
     {
       branch                          = "main"
@@ -104,7 +107,7 @@ module "repository" {
       }
     },
     {
-      branch                 = github_branch.development.branch
+      branch                 = "main" //keys(var.additional_branches)[0] TODO: deleting branches under protection throws an error: 422 Cannot delete this protected branch []
       enforce_admins         = true
       require_signed_commits = true
     }
@@ -124,11 +127,6 @@ module "repository" {
   projects = var.projects
 
   autolink_references = var.autolink_references
-}
-
-resource "github_branch" "development" {
-  repository = module.repository.repository.name
-  branch     = "development"
 }
 
 # ---------------------------------------------------------------------------------------------------------------------

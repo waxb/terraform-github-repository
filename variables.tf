@@ -276,6 +276,21 @@ variable "maintain_teams" {
   default     = []
 }
 
+variable "additional_branches" {
+  description = "(Optional) A map of additional branches to create in the repository"
+  type        = map(string)
+
+  # Example:
+  # additional_branches = {
+  #   release = "main"
+  #   hotfix0 = "main"
+  #   hotfix1 = null
+  #   patch   = "release"
+  # }
+
+  default = {}
+}
+
 variable "branch_protections" {
   description = "DEPRECATED: use branch_protections_v3 instead. Default is []."
   type        = any

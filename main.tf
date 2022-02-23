@@ -157,6 +157,19 @@ resource "github_branch_default" "default" {
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
+# Additional branches
+# https://registry.terraform.io/providers/integrations/github/latest/docs/resources/branch
+# ---------------------------------------------------------------------------------------------------------------------
+
+resource "github_branch" "additional_branches" {
+  for_each = var.additional_branches
+
+  repository    = github_repository.repository.name
+  branch        = each.key
+  source_branch = each.value
+}
+
+# ---------------------------------------------------------------------------------------------------------------------
 # Branch Protection
 # https://registry.terraform.io/providers/integrations/github/latest/docs/resources/branch_protection_v3
 # ---------------------------------------------------------------------------------------------------------------------

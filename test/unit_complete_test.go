@@ -32,6 +32,14 @@ func TestUnitComplete(t *testing.T) {
 		},
 	}
 
+	branchNameA := random.UniqueId()
+	branchNameB := random.UniqueId()
+
+	branchNames := map[string]string{
+		branchNameA: "main",
+		branchNameB: "main", //branchNameA,
+	}
+
 	terraformOptions := &terraform.Options{
 		TerraformDir: "unit-complete",
 		Upgrade:      true,
@@ -39,6 +47,7 @@ func TestUnitComplete(t *testing.T) {
 			"name":                          expectedRepositoryNameA,
 			"repository_with_defaults_name": expectedRepositoryNameB,
 			"issue_labels":                  issueLabels,
+			"additional_branches":           branchNames,
 
 			"team_name": expectedTeamName,
 		},

@@ -255,3 +255,21 @@ variable "autolink_references" {
     target_url_template = "https://hello.there/TICKET?query=<num>"
   }]
 }
+
+variable "additional_branches" {
+  description = "A map of additional branches. Key is the name and the value is the source"
+  type        = map(string)
+  default = {
+    release = "main"
+    hotfix0 = "main"
+    hotfix1 = "main"
+    patch   = "release"
+  }
+  #TODO: if graph can't handle source branches well, write validation
+}
+
+variable "archive_on_destroy" {
+  type        = string
+  description = "(Optional) Set to `true` to archive the repository instead of deleting on destroy."
+  default     = false
+}
