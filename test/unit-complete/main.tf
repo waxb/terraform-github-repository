@@ -17,6 +17,15 @@ resource "tls_private_key" "deploy" {
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
+# DATA for integration test
+# Use current user to add to restriction instead of relying on a preconfigured organisation
+# ---------------------------------------------------------------------------------------------------------------------
+
+data "github_user" "current" {
+  username = ""
+}
+
+# ---------------------------------------------------------------------------------------------------------------------
 # TEST A
 # We are creating a repository, adding teams and setting up branch protection,
 # deploy keys, issue labels and projects
@@ -48,9 +57,8 @@ module "repository" {
   license_template       = var.license_template
   archived               = false
   topics                 = var.topics
-  archive_on_destroy     = var.archive_on_destroy
 
-  admin_collaborators = ["terraform-test-user-1"]
+  admin_collaborators = [data.github_user.current.login]
 
 
   admin_team_ids = [
@@ -95,14 +103,14 @@ module "repository" {
 
       required_pull_request_reviews = {
         dismiss_stale_reviews           = true
-        dismissal_users                 = [var.team_user]
+        dismissal_users                 = [data.github_user.current.login]
         dismissal_teams                 = [github_team.team.name]
         require_code_owner_reviews      = true
         required_approving_review_count = 1
       }
 
       restrictions = {
-        users = [var.team_user]
+        users = [data.github_user.current.login]
         teams = [github_team.team.name]
       }
     },
@@ -157,11 +165,10 @@ resource "github_team" "team" {
 # ----------------------------------------------------------------------------------------------------------------------
 # TEAM MEMBERSHIP
 # We are adding one members to this team for testing branch restrictions.
-# The user defined in "var.team_user" should be a permanent normal member of organization you run the tests in.
 # ----------------------------------------------------------------------------------------------------------------------
 
 resource "github_team_membership" "team_membership_permanent" {
   team_id  = github_team.team.id
-  username = var.team_user
+  username = data.github_user.current.login
   role     = "member"
 }

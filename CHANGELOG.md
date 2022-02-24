@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.15.0]
+
+### Added
+- Add support creating branches from existing sources via the `github_branch` resource
+- `etag` added as ignored change on the `github_repository` lifecycle
+
+### Removed
+
+- Burnt in test accounts ("terraform-test-user", "terraform-test-user-1") to make test runnable on organisations without them
+
+### Fixed
+
 ## [0.14.0]
 
 ### Added

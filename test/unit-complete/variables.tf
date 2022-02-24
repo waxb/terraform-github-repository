@@ -152,12 +152,6 @@ variable "team_description" {
   default     = "A secret team created with terraform to test the terraformn-github-repository module."
 }
 
-variable "team_user" {
-  description = "The user that should be added to the created team."
-  type        = string
-  default     = "terraform-test-user"
-}
-
 variable "repository_defaults" {
   description = "A map of default settings that can be applied to a repository."
   type        = any
