@@ -263,7 +263,7 @@ variable "additional_branches" {
     release = "main"
     hotfix0 = "main"
     hotfix1 = "main"
-    patch   = "release"
+    patch   = "main"
   }
   #TODO: if graph can't handle source branches well, write validation
 }

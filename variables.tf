@@ -284,11 +284,16 @@ variable "additional_branches" {
   # additional_branches = {
   #   release = "main"
   #   hotfix0 = "main"
-  #   hotfix1 = null
-  #   patch   = "release"
+  #   hotfix1 = "main"
+  #   #patch   = "release" invalid
   # }
 
   default = {}
+
+  validation {
+    condition     = !anytrue([for k, _ in var.additional_branches : contains(values(var.additional_branches), k)])
+    error_message = "The branch map cannot use a source defined in itself. Only use existing sources."
+  }
 }
 
 variable "branch_protections" {

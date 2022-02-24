@@ -48,6 +48,7 @@ func TestUnitComplete(t *testing.T) {
 			"repository_with_defaults_name": expectedRepositoryNameB,
 			"issue_labels":                  issueLabels,
 			"additional_branches":           branchNames,
+			"archive_on_destroy":            false,
 
 			"team_name": expectedTeamName,
 		},
